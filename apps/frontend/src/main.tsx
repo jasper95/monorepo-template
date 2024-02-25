@@ -1,13 +1,25 @@
-import { StrictMode } from 'react';
-import * as ReactDOM from 'react-dom/client';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
-import App from './app/app';
+import '@/utils/dayjs'
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
+import RootProvider from './features/Providers'
+import Router from './routes'
+import showVersion from './utils/version'
+
+import '@/assets/styles/global.css'
+import '@fontsource/ubuntu/latin.css'
+import '@mantine/core/styles.layer.css'
+import '@mantine/dates/styles.css'
+
+const element = document.getElementById('root')!
+
+showVersion()
+
+ReactDOM.createRoot(element).render(
+  <React.StrictMode>
+    <RootProvider>
+      <Router />
+    </RootProvider>
+  </React.StrictMode>,
+)

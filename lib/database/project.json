@@ -1,0 +1,27 @@
+{
+  "name": "database",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "lib/database/src",
+  "projectType": "library",
+  "targets": {
+    "drizzle": {
+      "command": "drizzle-kit",
+      "options": {
+        "cwd": "lib/database"
+      }
+    },
+    "migrate": {
+      "command": "ts-node src/lib/drizzle/migrate.ts",
+      "options": {
+        "cwd": "lib/database"
+      }
+    },
+    "generate-types": {
+      "command": "prisma generate",
+      "options": {
+        "cwd": "lib/database"
+      }
+    }
+  },
+  "tags": []
+}

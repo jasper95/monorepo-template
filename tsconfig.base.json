@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@/*": ["apps/frontend/src/*"],
+      "@water-system-v2/database": ["lib/database/src/index.ts"],
+      "@water-system-v2/mailer": ["lib/mailer/src/index.ts"],
+      "@water-system-v2/trpc": ["lib/trpc/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
