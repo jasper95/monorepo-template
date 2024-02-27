@@ -16,14 +16,15 @@ import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const auth = router({
   session: protectedProcedure.query(({ ctx }) => {
+    const { user, session} = ctx
     return {
-      session: ctx.res.locals.session,
-      user: ctx.res.locals.user,
+      session,
+      user,
     }
   }),
   logout: protectedProcedure.mutation(async ({ ctx }) => {
-    const { res } = ctx
-    await lucia.invalidateSession(res.locals.session.id)
+    const { res, session } = ctx
+    await lucia.invalidateSession(session.id)
     res.setHeader('Set-Cookie', lucia.createBlankSessionCookie().serialize())
     return {
       success: true,

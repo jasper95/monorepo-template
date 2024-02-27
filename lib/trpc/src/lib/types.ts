@@ -10,9 +10,3 @@ declare module 'lucia' {
   }
 }
 
-declare module 'express' {
-  interface Locals {
-    user: User | null
-    session: Session | null
-  }
-}

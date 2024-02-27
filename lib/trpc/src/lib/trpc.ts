@@ -1,20 +1,10 @@
 import { TRPCError, initTRPC } from '@trpc/server'
-import { CreateExpressContextOptions } from '@trpc/server/adapters/express'
-import { db } from '@water-system-v2/database'
 import superjson from 'superjson'
 import { ZodError } from 'zod'
-// import { lucia } from './auth/lucia'
+import type { Context } from './express'
 
 const transformer = superjson
-export const createContext = ({ req, res }: CreateExpressContextOptions) => {
-  return {
-    req,
-    res,
-    db,
-  }
-}
 
-export type Context = ReturnType<typeof createContext>
 const t = initTRPC.context<Context>().create({
   transformer,
   errorFormatter(opts) {
@@ -34,7 +24,7 @@ const t = initTRPC.context<Context>().create({
 export const protectedProcedure = t.procedure.use(
   async function isAuthed(opts) {
     const { ctx } = opts
-    if (!ctx.res.locals.session) {
+    if (!ctx.session) {
       throw new TRPCError({ code: 'UNAUTHORIZED' })
     }
     return opts.next({})
