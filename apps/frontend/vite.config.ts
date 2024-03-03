@@ -1,4 +1,5 @@
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
 import million from 'million/compiler'
 import { defineConfig, loadEnv } from 'vite'
@@ -14,7 +15,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 4200,
       proxy: {
-        '/api': {
+        '/trpc': {
           target: env.VITE_APP_BACKEND_URL,
           changeOrigin: true,
         },
@@ -29,6 +30,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       million.vite({ auto: true }),
       react(),
+      TanStackRouterVite(),
       checker({
         typescript: true,
       }),

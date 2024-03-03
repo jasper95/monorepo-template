@@ -1,96 +1,83 @@
 import {
+  Anchor,
   Button,
-  Card,
+  Checkbox,
+  Container,
+  Divider,
   Group,
+  Paper,
+  PaperProps,
   PasswordInput,
   Stack,
   Text,
   TextInput,
 } from '@mantine/core'
 
+import { Link } from '@tanstack/react-router'
+import { FaXTwitter } from 'react-icons/fa6'
+import { FcGoogle } from 'react-icons/fc'
 import useLoginForm from './hooks/useLoginForm'
-
-import styles from '@/components/Input/input.module.css'
-import { trpc } from '@/utils/trpc'
 
 export default function LoginForm() {
   const { form, onSubmit } = useLoginForm()
-  // const { data } = trpc.auth.session.useQuery()
-
   return (
-    <form onSubmit={onSubmit}>
-      <Card
-        shadow={'sm'}
-        radius={'md'}
-        bg={'white'}
-        style={{ overflow: 'visible' }}
-      >
-        <Card.Section inheritPadding py={36} px={32}>
-          <Group align="center" justify="center">
-            <Text size={'26px'} lh={'39px'} c={'dark.9'} fw={'500'}>
-              Sign In
-            </Text>
-          </Group>
-        </Card.Section>
+    <Paper w="full" radius="md" p="xl" withBorder>
+      <Text size="lg" fw={500}>
+        Welcome to Mantine, login with
+      </Text>
 
-        <Card.Section inheritPadding px={32}>
-          <Stack gap={36}>
-            <Stack gap={36} w={372}>
-              <TextInput
-                label="Email"
-                placeholder="Enter your email"
-                classNames={{
-                  input: styles.input,
-                  error: styles['input__error-message'],
-                }}
-                {...form.getInputProps('email')}
-              />
+      <Group grow mb="md" mt="md">
+        <Button leftSection={<FcGoogle size={24} />} variant="default" />
+        <Button leftSection={<FaXTwitter size={24} />} variant="default" />
+      </Group>
 
-              <PasswordInput
-                label="Password"
-                placeholder="Enter your password"
-                classNames={{
-                  input: styles.input,
-                  error: styles['input__error-message'],
-                }}
-                {...form.getInputProps('password')}
-              />
-            </Stack>
+      <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-            <Group justify="flex-end">
-              <Text size={'13px'} lh={'21px'} fw={'400'}>
-                {/* <Text span component={Link} to="/auth/forgot-password" c="accent.4">
-                                    Forgot your password?
-                                </Text> */}
-              </Text>
-            </Group>
+      <form onSubmit={onSubmit}>
+        <Stack>
+          <TextInput
+            required
+            label="Email"
+            placeholder="hello@mantine.dev"
+            value={form.values.email}
+            onChange={(event) =>
+              form.setFieldValue('email', event.currentTarget.value)
+            }
+            error={form.errors.email && 'Invalid email'}
+            radius="md"
+          />
 
-            <Stack>
-              <Button
-                type="submit"
-                variant="filled"
-                radius={'sm'}
-                h={40}
-                size="14px"
-                fullWidth
-              >
-                Sign In
-              </Button>
-            </Stack>
-          </Stack>
-        </Card.Section>
+          <PasswordInput
+            required
+            label="Password"
+            placeholder="Your password"
+            value={form.values.password}
+            onChange={(event) =>
+              form.setFieldValue('password', event.currentTarget.value)
+            }
+            error={
+              form.errors.password &&
+              'Password should include at least 6 characters'
+            }
+            radius="md"
+          />
+        </Stack>
+        <Group justify="space-between" mt="lg">
+          <Checkbox label="Remember me" />
+          <Anchor component={Link} to="/forgot-password" size="sm">
+            Forgot password?
+          </Anchor>
+        </Group>
 
-        <Card.Section inheritPadding pb={16} pt={16} px={32}>
-          {/* <Group py={16} align="center" justify="center">
-                        <Text size={'13px'} lh={'21px'} c={'gray.6'} fw={'500'}>
-                            Don't have an account?{' '}
-                            <Text span component={Link} to="/auth/register" size={'13px'} lh={'21px'} c="accent.4" fw={'500'}>
-                                Sign Up
-                            </Text>
-                        </Text>
-                    </Group> */}
-        </Card.Section>
-      </Card>
-    </form>
+        <Group justify="space-between" mt="xl">
+          <Anchor component={Link} c="dimmed" to="/register" size="xs">
+            Don't have an account? Register
+          </Anchor>
+          <Button type="submit" radius="xl">
+            Login
+          </Button>
+        </Group>
+      </form>
+    </Paper>
   )
 }

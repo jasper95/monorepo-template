@@ -1,0 +1,50 @@
+
+.user {
+  margin-bottom: var(--mantine-spacing-sm);
+
+  @mixin hover {
+  }
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  font-size: var(--mantine-font-size-xs);
+  padding: rem(4px) var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-sm);
+  font-weight: 500;
+  margin: 1px 0;
+
+  @mixin hover {
+    background-color: var(--mantine-color-dark-filled-hover);
+
+    .navLinkIcon {
+      color: var(--mantine-primary-color-contrast)
+    }
+  }
+
+  &[data-status='active'] {
+    &,
+    &:hover {
+      background-color: var(--mantine-color-dark-filled-hover);
+
+
+      .navLinkIcon {
+        color: var(--mantine-primary-color-contrast)
+      }
+    }
+  }
+}
+
+.navLinkIcon {
+  width: rem(16px);
+  height: rem(16px);
+  color: var(--mantine-color-dimmed);
+}
+
+.breadcrumbLink {
+  color: var(--mantine-color-dimmed);
+  &[data-status='active'] {
+    color: var(--mantine-primary-color-contrast);
+  }
+}

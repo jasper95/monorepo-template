@@ -1,8 +1,11 @@
-import { trpcMiddleware } from '@water-system-v2/trpc'
-import express from 'express'
+import { serve } from '@hono/node-server'
+import { honoMiddleware } from '@water-system-v2/trpc'
+import { Hono } from 'hono'
 
-const app = express()
+const app = new Hono()
+app.use('/trpc/*', honoMiddleware)
 
-app.use('/api/trpc', trpcMiddleware)
-
-app.listen(4000)
+serve({
+  fetch: app.fetch,
+  port: 4000,
+})

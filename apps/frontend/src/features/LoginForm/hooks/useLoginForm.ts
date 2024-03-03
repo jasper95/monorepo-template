@@ -7,8 +7,9 @@ const schema = zod.object({
   password: zod.string().min(6),
 })
 
+export type TLoginForm = zod.infer<typeof schema>
 export default function useLoginForm() {
-  const mutation = trpc.auth.signup.useMutation()
+  const mutation = trpc.auth.login.useMutation()
 
   const form = useForm({
     validate: zodResolver(schema),
